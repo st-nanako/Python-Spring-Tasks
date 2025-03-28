@@ -12,7 +12,7 @@ CREATE TABLE users(
 CREATE TABLE posting(
     id INTEGER AUTO_INCREMENT not null,
     user_id INTEGER not null,
-    post_text VARCHAR(64) not null,
+    post_text VARCHAR(400) not null,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES users(id)
 );
@@ -29,7 +29,7 @@ CREATE TABLE evaluation(
 CREATE TABLE user_icon(
     id INTEGER AUTO_INCREMENT not null,
     user_id INTEGER not null,
-    user_icon_path INTEGER not null,
+    user_icon_path VARCHAR(400) not null,
     PRIMARY KEY(id),
     FOREIGN KEY(user_id) REFERENCES users(id)
 );

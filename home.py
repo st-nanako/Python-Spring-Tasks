@@ -1,10 +1,9 @@
 import tkinter as tk
 from PIL import Image,ImageTk
-from tkinter import ttk
 
-class User(tk.Frame):
+class Home(tk.Frame):
     def __init__(self,master):#,account
-        super().__init__(master,width=850,height=600)#,bg='#FFFFFF'
+        super().__init__(master,width=850,height=600,bg='#F0F8FF')#
         # self.account = account
         self.pack()
 
@@ -18,23 +17,23 @@ class User(tk.Frame):
         # アイコン生成
         home_img = Image.open("C:/Users/satou/Desktop/春休み課題/Python-Spring-Tasks/img/homeアイコン.png")
         self.home_icon_img = ImageTk.PhotoImage(home_img)
-        self.home_icon = tk.Label(self,image=self.home_icon_img)
+        self.home_icon = tk.Label(self,image=self.home_icon_img,bg='#F0F8FF')
         self.home_icon.place(x=15,y=10)
-        self.label_home = tk.Label(self,text='ホーム')
-        self.label_home.place(x=65,y=140)
+        self.label_home = tk.Label(self,text='ホーム',bg='#F0F8FF')
+        self.label_home.place(x=65,y=150)
         
         search_img = Image.open("C:/Users/satou/Desktop/春休み課題/Python-Spring-Tasks/img/検索アイコン.png")
         self.search_icon_img = ImageTk.PhotoImage(search_img)
-        self.search_icon = tk.Label(self,image=self.search_icon_img)
+        self.search_icon = tk.Label(self,image=self.search_icon_img,bg='#F0F8FF')
         self.search_icon.place(x=15,y=180)
-        self.label_search = tk.Label(self,text='検索')
-        self.label_search.place(x=65,y=290)
+        self.label_search = tk.Label(self,text='検索',bg='#F0F8FF')
+        self.label_search.place(x=65,y=325)
 
         user_img = Image.open("C:/Users/satou/Desktop/春休み課題/Python-Spring-Tasks/img/初期画像user.png")
         self.user_icon_img = ImageTk.PhotoImage(user_img)
-        self.user_icon = tk.Label(self,image=self.user_icon_img)
+        self.user_icon = tk.Label(self,image=self.user_icon_img,bg='#F0F8FF')
         self.user_icon.place(x=15,y=350)
-        self.label_user = tk.Label(self,text='ユーザー名')
+        self.label_user = tk.Label(self,text='ユーザー名',bg='#F0F8FF')#self.account[1]
         self.label_user.place(x=60,y=510)
         
         # 投稿リスト
@@ -65,6 +64,22 @@ class User(tk.Frame):
 
         self.posts_frame.bind("<Configure>", lambda e: self.display_canvas.configure(scrollregion=self.display_canvas.bbox("all")))
         
+        # event追加
+        self.label_search.bind('<Button-1>',self.search_click)
+        self.label_home.bind('<Button-1>',self.home_click)
+        self.label_user.bind('<Button-1>',self.user_click)
+        # アイコンイベント追加
+        self.search_icon.bind('<Button-1>',self.search_click)
+        self.home_icon.bind('<Button-1>',self.home_click)
+        self.user_icon.bind('<Button-1>',self.user_click)
+        # アイコン色の変更
+        self.search_icon.bind('<Enter>',self.enter_event)
+        self.search_icon.bind('<Leave>',self.leave_event)
+        self.home_icon.bind('<Enter>',self.enter_event)
+        self.home_icon.bind('<Leave>',self.leave_event)
+        self.user_icon.bind('<Enter>',self.enter_event)
+        self.user_icon.bind('<Leave>',self.leave_event)
+        
 
     def post_message(self):
         # テキストボックスから内容を取得
@@ -90,7 +105,7 @@ class User(tk.Frame):
                 icon_label.pack(side="left", padx=5)
 
                 # ユーザー名
-                user_name = tk.Label(post_frame,text='ユーザー名')
+                user_name = tk.Label(post_frame,text='ユーザー名')#self.account[1]
                 user_name.pack(side="left",padx=5)
 
                 heart_img = Image.open("C:/Users/satou/Desktop/春休み課題/Python-Spring-Tasks/img/ハート(なし).png").resize((30, 30))  # サイズを調整
@@ -129,77 +144,32 @@ class User(tk.Frame):
             event.widget.heart_status = True
     
         
-    #     # event追加
-    #     self.label_search.bind('<Button-1>',self.search_click)
-    #     self.label_lending.bind('<Button-1>',self.lending_click)
-    #     self.label_returning.bind('<Button-1>',self.returning_click)
-    #     self.label_lending_log.bind('<Button-1>',self.lending_log_click)
-    #     self.label_borrowing_book.bind('<Button-1>',self.borrowing_click)
-    #     # アイコンイベント追加
-    #     self.search_icon.bind('<Button-1>',self.search_click)
-    #     self.rending_icon.bind('<Button-1>',self.lending_click)
-    #     self.return_icon.bind('<Button-1>',self.returning_click)
-    #     self.log_icon.bind('<Button-1>',self.lending_log_click)
-    #     self.book_icon.bind('<Button-1>',self.borrowing_click)
-    #     # アイコン色の変更
-    #     self.search_icon.bind('<Enter>',self.enter_event)
-    #     self.search_icon.bind('<Leave>',self.leave_event)
-    #     self.rending_icon.bind('<Enter>',self.enter_event)
-    #     self.rending_icon.bind('<Leave>',self.leave_event)
-    #     self.return_icon.bind('<Enter>',self.enter_event)
-    #     self.return_icon.bind('<Leave>',self.leave_event)
-    #     self.log_icon.bind('<Enter>',self.enter_event)
-    #     self.log_icon.bind('<Leave>',self.leave_event)
-    #     self.book_icon.bind('<Enter>',self.enter_event)
-    #     self.book_icon.bind('<Leave>',self.leave_event)
-        
-    # # メニューのイベント
-    # def edit_user(self):
-    #     from user_edit import UserEdit
-    #     self.destroy()
-    #     UserEdit(self.master,self.account)
+    def enter_event(self,event):
+        event.widget.configure(bg='#DDA0DD')
 
-    # # def switch_user(self):
-    # #     from login import Login
-    # #     self.destroy()
-    # #     Login(self.master)
-        
+    def leave_event(self,event):
+        event.widget.configure(bg='#F0F8FF')
 
-    # def enter_event(self,event):
-    #     event.widget.configure(bg='#B0C4DE')
-
-    # def leave_event(self,event):
-    #     event.widget.configure(bg='#FFFFFF')
-
-    # # 本の検索ページへの移動
-    # def search_click(self,event):
-    #     from searchbook import SearchBook
-    #     self.destroy()
-    #     SearchBook(self.master,self.account)
+    # ユーザー検索ページへの移動
+    def search_click(self,event):
+        from search import Search
+        self.destroy()
+        Search(self.master)#,self.account
     
-    # # 貸出ページへの移動
-    # def lending_click(self,event):
-    #     from lending import Lending
-    #     self.destroy()
-    #     Lending(self.master,self.account)
+    # ホームページへの移動
+    def home_click(self,event):
+        from home import Home
+        self.destroy()
+        Home(self.master)#,self.account
         
-    # # 返却ページへの移動
-    # def returning_click(self,event):
-    #     from returning import Returning
-    #     self.destroy()
-    #     Returning(self.master,self.account)
-    # # 貸出履歴への移動
-    # def lending_log_click(self,event):
-    #     from lending_log import LendingLog
-    #     self.destroy()
-    #     LendingLog(self.master,self.account)
-    # # 現在借りている本へ移動
-    # def borrowing_click(self,event):
-    #     from user_borrowing import UserBorrowing
-    #     self.destroy()
-    #     UserBorrowing(self.master,self.account)
-
+    # ユーザーページへの移動
+    def user_click(self,event):
+        from user_profil import UserProfil
+        self.destroy()
+        UserProfil(self.master)#,self.account
+    
+    
 if __name__ == '__main__':
     root = tk.Tk()
-    app = User(master=root)
+    app = Home(master=root)
     app.mainloop()

@@ -1,18 +1,15 @@
 import tkinter as tk
 from tkinter import messagebox
 from db import insert_user,get_account_by_email
-from maile import code_mail,Register_mail
+from maile import code_mail
 
 
-class LoCode(tk.Frame):
-    def __init__(self, master,code,mail,name,pw,icon):#
+class RePassCode(tk.Frame):
+    def __init__(self, master,code,mail):#
         super().__init__(master,bg='#FFFFFF',width=400, height=400)
         self.pack()
         self.code = code
         self.mail = mail
-        self.name = name
-        self.pw = pw
-        self.icon = icon
         master.geometry('400x400')
         master.title('確認コード入力画面')
 
@@ -41,20 +38,17 @@ class LoCode(tk.Frame):
         self.return_button.place(x=120,y=270)
         
     def return_event(self):
-        from register import Register
+        from re_pass_mail import RePassMail
         self.destroy()
-        Register(self.master)
+        RePassMail(self.master)
         
     def code_event(self):
         print(self.code,self.entry_code.get(),type(self.code),type(self.entry_code.get()))
         entry_code = self.entry_code.get()
         if str(self.code) == entry_code:
-            insert_user(self.name,self.mail,self.pw,self.icon)
-            messagebox.showinfo('成功','登録に成功しました。')
-            # Register_mail(self.mail,self.name)
-            from login import Login
+            from re_pass import RePass
             self.destroy()
-            Login(self.master)
+            RePass(self.master,self.mail)
         else:
             self.label_message.configure(text='確認コードが違います',bg='#FFFFFF',fg='red',font=('',13))
         

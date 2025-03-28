@@ -138,7 +138,12 @@ class Register(tk.Frame):
                 mail = self.entry_mail.get()
                 name = self.entry_name.get()
                 pw = self.entry_pw.get()
-                icon = self.file_name
+                if self.icon_status:
+                    self.file_path = self.file_name
+                else:
+                    self.file_path = "C:/Users/satou/Desktop/春休み課題/Python-Spring-Tasks/img/初期画像user.png"
+                icon = self.file_path
+                print(icon)
                 print(code)
                 # code_mail(mail,code)
                 messagebox.showinfo('確認コード','確認コードを送信しました。')

@@ -96,8 +96,8 @@ def login(email,input_pw):
     if account is None:
         return None #ログイン失敗
     
-    hashed_db_pw = account[4] #DBから取得したハッシュ済みのpw
-    salt = account[5] #DBから取得したsalt
+    hashed_db_pw = account[3] #DBから取得したハッシュ済みのpw
+    salt = account[4] #DBから取得したsalt
     hashed_input_pw = get_hadhed_password(input_pw,salt) #入力されたpwをハッシュ
     
     if hashed_db_pw == hashed_input_pw:
